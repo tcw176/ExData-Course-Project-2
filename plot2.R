@@ -9,11 +9,11 @@ SCC <- readRDS("Source_Classification_Code.rds")
 
 png(filename = "plot2.png")
 
-BPol <- filter(NEI, fips == "24510")
-GBPol <- group_by(BPol, year)
-SBPol <- summarise(GBPol, EmissionTotal = sum(Emissions))
+BaltimorePollution <- filter(NEI, fips == "24510") %>% 
+      group_by(year) %>%
+      summarise(EmissionTotal = sum(Emissions))
 
-plot(SBPol$year, SBPol$EmissionTotal, xlab ="Year", ylab = "Emission Total")
+plot(BaltimorePollution$year, BaltimorePollution$EmissionTotal, xlab ="Year", ylab = "Emission Total")
 model <- lm(EmissionTotal ~ year, SBPol)
 abline(model, lw = 2)
 title(main = "Total PM 2.5 Emissions from All Sources for the City of Baltimore")
